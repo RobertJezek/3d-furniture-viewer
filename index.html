@@ -52,7 +52,7 @@
             background: rgba(255, 255, 255, 0.95);
             padding: 20px;
             border-radius: 15px;
-            width: 380px;
+            width: 350px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             max-height: calc(100vh - 160px);
             overflow-y: auto;
@@ -61,13 +61,13 @@
         .sidebar h2 {
             color: #333;
             margin-bottom: 15px;
-            font-size: 20px;
+            font-size: 18px;
             border-bottom: 2px solid #667eea;
             padding-bottom: 10px;
         }
         
         .section {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             padding: 15px;
             background: #f8f9fa;
             border-radius: 10px;
@@ -75,19 +75,19 @@
         
         .section h3 {
             color: #555;
-            font-size: 16px;
-            margin-bottom: 12px;
+            font-size: 14px;
+            margin-bottom: 10px;
         }
         
         .input-group {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         
         .input-group label {
             display: block;
             margin-bottom: 5px;
             color: #555;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
         }
         
@@ -98,7 +98,6 @@
             border: 2px solid #e0e0e0;
             border-radius: 6px;
             font-size: 13px;
-            transition: border-color 0.3s;
         }
         
         .input-group input:focus,
@@ -111,31 +110,6 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 8px;
-        }
-        
-        .color-picker {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
-        
-        .color-option {
-            width: 35px;
-            height: 35px;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.3s;
-        }
-        
-        .color-option:hover {
-            transform: scale(1.1);
-        }
-        
-        .color-option.active {
-            border-color: #667eea;
-            box-shadow: 0 0 8px rgba(102, 126, 234, 0.5);
         }
         
         button {
@@ -156,36 +130,26 @@
             transform: translateY(-2px);
         }
         
-        button:active {
-            transform: translateY(0);
-        }
-        
-        button.secondary {
-            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
-        }
-        
         button.danger {
             background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
         }
         
         .furniture-list {
-            max-height: 300px;
+            max-height: 200px;
             overflow-y: auto;
         }
         
         .furniture-item {
             background: white;
-            padding: 12px;
+            padding: 10px;
             margin-bottom: 8px;
             border-radius: 8px;
             border: 2px solid #e0e0e0;
             cursor: pointer;
-            transition: all 0.3s;
         }
         
         .furniture-item:hover {
             border-color: #667eea;
-            transform: translateX(3px);
         }
         
         .furniture-item.selected {
@@ -193,31 +157,15 @@
             background: #f0f4ff;
         }
         
-        .furniture-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-        
         .furniture-item-title {
             font-weight: 600;
             color: #333;
-            font-size: 14px;
-        }
-        
-        .furniture-item-delete {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
+            font-size: 13px;
+            margin-bottom: 3px;
         }
         
         .furniture-item-info {
-            font-size: 12px;
+            font-size: 11px;
             color: #666;
         }
         
@@ -234,15 +182,6 @@
             width: 100%;
             height: 100%;
             display: block;
-            cursor: grab;
-        }
-        
-        #canvas.dragging {
-            cursor: grabbing;
-        }
-        
-        #canvas.moving-furniture {
-            cursor: move;
         }
         
         .toolbar {
@@ -255,8 +194,6 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             display: flex;
             gap: 8px;
-            flex-wrap: wrap;
-            max-width: 400px;
         }
         
         .toolbar button {
@@ -274,30 +211,32 @@
             padding: 12px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            max-width: 280px;
-            font-size: 12px;
+            font-size: 11px;
+            max-width: 250px;
         }
         
         .info-panel h4 {
             margin-bottom: 8px;
             color: #333;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
         }
         
         .info-panel p {
-            margin: 4px 0;
+            margin: 3px 0;
             color: #666;
         }
         
         .controls-widget {
             position: absolute;
+            top: 80px;
+            left: 20px;
             background: rgba(255, 255, 255, 0.95);
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 2px 15px rgba(0,0,0,0.2);
             display: none;
-            z-index: 100;
+            min-width: 200px;
         }
         
         .controls-widget.active {
@@ -307,66 +246,34 @@
         .controls-widget h4 {
             margin-bottom: 10px;
             color: #333;
-            font-size: 14px;
+            font-size: 13px;
         }
         
-        .control-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+        .control-row {
+            display: flex;
             gap: 5px;
             margin-bottom: 10px;
         }
         
-        .control-buttons button {
+        .control-row button {
+            flex: 1;
             padding: 8px;
-            font-size: 16px;
             margin: 0;
-        }
-        
-        .slider-group {
-            margin-top: 10px;
-        }
-        
-        .slider-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .slider-group input[type="range"] {
-            width: 100%;
-        }
-        
-        @media (max-width: 1200px) {
-            .container {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: 100%;
-                max-height: none;
-            }
-            
-            .viewer-container {
-                min-height: 600px;
-            }
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>🏠 3D Plánovač Interiéru</h1>
-        <p>Navrhněte celou místnost - táhněte nábytek myší kam chcete!</p>
+        <p>Táhněte nábytek myší po místnosti!</p>
     </div>
     
     <div class="container">
         <div class="sidebar">
-            <h2>🏠 Nastavení Místnosti</h2>
-            
+            <h2>🏠 Místnost</h2>
             <div class="section">
-                <h3>📏 Rozměry místnosti (cm)</h3>
+                <h3>📏 Rozměry (cm)</h3>
                 <div class="input-row">
                     <div class="input-group">
                         <label>Délka:</label>
@@ -381,80 +288,43 @@
                         <input type="number" id="roomHeight" value="270" min="200" max="500">
                     </div>
                 </div>
-                
-                <div class="input-group" style="margin-top: 10px;">
-                    <label>🎨 Barva stěn:</label>
-                    <div class="color-picker">
-                        <div class="color-option active" style="background-color: #f5f5f5;" data-type="wall" data-color="#f5f5f5"></div>
-                        <div class="color-option" style="background-color: #e8f4f8;" data-type="wall" data-color="#e8f4f8"></div>
-                        <div class="color-option" style="background-color: #fff9e6;" data-type="wall" data-color="#fff9e6"></div>
-                        <div class="color-option" style="background-color: #ffeef0;" data-type="wall" data-color="#ffeef0"></div>
-                        <div class="color-option" style="background-color: #e6f7e6;" data-type="wall" data-color="#e6f7e6"></div>
-                    </div>
-                </div>
-                
-                <div class="input-group">
-                    <label>🟫 Barva podlahy:</label>
-                    <div class="color-picker">
-                        <div class="color-option active" style="background-color: #D2B48C;" data-type="floor" data-color="#D2B48C"></div>
-                        <div class="color-option" style="background-color: #8B7355;" data-type="floor" data-color="#8B7355"></div>
-                        <div class="color-option" style="background-color: #DEB887;" data-type="floor" data-color="#DEB887"></div>
-                        <div class="color-option" style="background-color: #cccccc;" data-type="floor" data-color="#cccccc"></div>
-                    </div>
-                </div>
-                
-                <button id="updateRoomBtn">🔄 Aktualizovat místnost</button>
+                <button id="updateRoomBtn">🔄 Aktualizovat</button>
             </div>
             
             <h2>🪑 Přidat Nábytek</h2>
-            
             <div class="section">
                 <div class="input-group">
-                    <label>Typ nábytku:</label>
+                    <label>Typ:</label>
                     <select id="furnitureType">
                         <option value="cabinet">Skříň</option>
                         <option value="table">Stůl</option>
                         <option value="shelf">Police</option>
                         <option value="drawer">Komoda</option>
-                        <option value="bed">Postel</option>
-                        <option value="counter">Kuchyňská linka</option>
                     </select>
                 </div>
                 
                 <h3>📏 Rozměry (cm)</h3>
                 <div class="input-row">
                     <div class="input-group">
-                        <label>Šířka:</label>
+                        <label>Š:</label>
                         <input type="number" id="furnitureWidth" value="100" min="10" max="500">
                     </div>
                     <div class="input-group">
-                        <label>Výška:</label>
+                        <label>V:</label>
                         <input type="number" id="furnitureHeight" value="200" min="10" max="500">
                     </div>
                     <div class="input-group">
-                        <label>Hloubka:</label>
+                        <label>H:</label>
                         <input type="number" id="furnitureDepth" value="60" min="10" max="500">
                     </div>
                 </div>
                 
-                <div class="input-group">
-                    <label>🎨 Barva:</label>
-                    <div class="color-picker" id="furnitureColors">
-                        <div class="color-option active" style="background-color: #8B4513;" data-type="furniture" data-color="#8B4513"></div>
-                        <div class="color-option" style="background-color: #D2691E;" data-type="furniture" data-color="#D2691E"></div>
-                        <div class="color-option" style="background-color: #DEB887;" data-type="furniture" data-color="#DEB887"></div>
-                        <div class="color-option" style="background-color: #FFFFFF; border: 1px solid #ccc;" data-type="furniture" data-color="#FFFFFF"></div>
-                        <div class="color-option" style="background-color: #2C3E50;" data-type="furniture" data-color="#2C3E50"></div>
-                        <div class="color-option" style="background-color: #34495E;" data-type="furniture" data-color="#34495E"></div>
-                    </div>
-                </div>
-                
-                <button id="addFurnitureBtn">➕ Přidat do místnosti</button>
+                <button id="addFurnitureBtn">➕ Přidat</button>
             </div>
             
-            <h2>📋 Nábytek v místnosti</h2>
+            <h2>📋 Seznam nábytku</h2>
             <div class="furniture-list" id="furnitureList">
-                <p style="text-align: center; color: #999; padding: 20px;">Zatím žádný nábytek...<br>Po přidání jej můžete táhnout myší!</p>
+                <p style="text-align: center; color: #999; padding: 15px; font-size: 12px;">Zatím žádný nábytek</p>
             </div>
         </div>
         
@@ -462,35 +332,33 @@
             <canvas id="canvas"></canvas>
             
             <div class="toolbar">
-                <button id="viewTopBtn">📐 Pohled shora</button>
-                <button id="view3DBtn">🔄 3D pohled</button>
-                <button id="viewFrontBtn">👁️ Pohled zepředu</button>
+                <button id="viewTopBtn">📐 Shora</button>
+                <button id="view3DBtn">🔄 3D</button>
                 <button id="resetViewBtn">↺ Reset</button>
             </div>
             
             <div class="controls-widget" id="controlsWidget">
                 <h4>Ovládání nábytku</h4>
-                <div class="control-buttons">
-                    <button id="moveUpBtn" title="Posunout nahoru">⬆️</button>
-                    <button id="rotateBtn" title="Otočit o 90°">🔄</button>
-                    <button id="moveDownBtn" title="Posunout dolů">⬇️</button>
+                <div class="control-row">
+                    <button id="moveUpBtn">⬆️</button>
+                    <button id="rotateBtn">🔄</button>
+                    <button id="moveDownBtn">⬇️</button>
                 </div>
-                <div class="slider-group">
-                    <label>Výška nad podlahou: <span id="heightValue">0</span> cm</label>
+                <div class="input-group">
+                    <label>Výška: <span id="heightValue">0</span> cm</label>
                     <input type="range" id="heightSlider" min="0" max="250" value="0" step="5">
                 </div>
-                <button id="deleteBtn" class="danger" style="margin-top: 10px;">🗑️ Smazat nábytek</button>
+                <button id="deleteBtn" class="danger">🗑️ Smazat</button>
             </div>
             
             <div class="info-panel">
                 <h4>💡 Ovládání:</h4>
                 <p><strong>Kamera:</strong></p>
-                <p>• Levé tlačítko: Otáčení pohledu</p>
-                <p>• Pravé tlačítko: Posun kamery</p>
-                <p>• Kolečko: Přiblížení/Oddálení</p>
+                <p>• Levé tlačítko: Otáčení</p>
+                <p>• Pravé tlačítko: Posun</p>
+                <p>• Kolečko: Zoom</p>
                 <p style="margin-top: 8px;"><strong>Nábytek:</strong></p>
-                <p>• Klikněte na nábytek a táhněte</p>
-                <p>• Ovládací panel pro výšku a rotaci</p>
+                <p>• Klikněte a táhněte myší</p>
             </div>
         </div>
     </div>
@@ -505,17 +373,11 @@
         let isDraggingCamera = false;
         let isRightClick = false;
         
-        let wallColor = 0xf5f5f5;
-        let floorColor = 0xD2B48C;
-        let selectedFurnitureColor = 0x8B4513;
-        
         const typeNames = {
             'cabinet': 'Skříň',
             'table': 'Stůl',
             'shelf': 'Police',
-            'drawer': 'Komoda',
-            'bed': 'Postel',
-            'counter': 'Kuchyňská linka'
+            'drawer': 'Komoda'
         };
         
         function init() {
@@ -530,29 +392,17 @@
             renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
             renderer.setSize(canvas.clientWidth, canvas.clientHeight);
             renderer.shadowMap.enabled = true;
-            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             
             raycaster = new THREE.Raycaster();
             mouse = new THREE.Vector2();
             
-            // Světla
             const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
             scene.add(ambientLight);
             
             const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
             directionalLight.position.set(300, 400, 300);
             directionalLight.castShadow = true;
-            directionalLight.shadow.camera.left = -500;
-            directionalLight.shadow.camera.right = 500;
-            directionalLight.shadow.camera.top = 500;
-            directionalLight.shadow.camera.bottom = -500;
-            directionalLight.shadow.mapSize.width = 2048;
-            directionalLight.shadow.mapSize.height = 2048;
             scene.add(directionalLight);
-            
-            const pointLight = new THREE.PointLight(0xffffff, 0.4);
-            pointLight.position.set(-200, 250, -200);
-            scene.add(pointLight);
             
             createRoom();
             setupEventListeners();
@@ -570,14 +420,11 @@
             const height = parseFloat(document.getElementById('roomHeight').value);
             
             room = new THREE.Group();
-            room.userData.isRoom = true;
             
-            // Podlaha
             const floorGeometry = new THREE.PlaneGeometry(length, width);
             const floorMaterial = new THREE.MeshStandardMaterial({ 
-                color: floorColor,
-                roughness: 0.8,
-                metalness: 0.2
+                color: 0xD2B48C,
+                roughness: 0.8
             });
             const floor = new THREE.Mesh(floorGeometry, floorMaterial);
             floor.rotation.x = -Math.PI / 2;
@@ -585,100 +432,64 @@
             floor.userData.isFloor = true;
             room.add(floor);
             
-            // Mřížka
             const gridHelper = new THREE.GridHelper(Math.max(length, width), 20, 0x888888, 0xcccccc);
             room.add(gridHelper);
             
             const wallMaterial = new THREE.MeshStandardMaterial({ 
-                color: wallColor,
+                color: 0xf5f5f5,
                 side: THREE.DoubleSide,
                 transparent: true,
-                opacity: 0.4,
-                roughness: 0.9
+                opacity: 0.4
             });
             
-            const edgeMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 2 });
-            
-            // Zadní stěna
             const backWall = new THREE.Mesh(
                 new THREE.PlaneGeometry(length, height),
                 wallMaterial
             );
             backWall.position.set(0, height/2, -width/2);
-            backWall.userData.isWall = true;
             room.add(backWall);
             
-            const backEdge = new THREE.LineSegments(
-                new THREE.EdgesGeometry(backWall.geometry),
-                edgeMaterial
-            );
-            backWall.add(backEdge);
-            
-            // Levá stěna
             const leftWall = new THREE.Mesh(
                 new THREE.PlaneGeometry(width, height),
                 wallMaterial
             );
             leftWall.position.set(-length/2, height/2, 0);
             leftWall.rotation.y = Math.PI / 2;
-            leftWall.userData.isWall = true;
             room.add(leftWall);
             
-            const leftEdge = new THREE.LineSegments(
-                new THREE.EdgesGeometry(leftWall.geometry),
-                edgeMaterial
-            );
-            leftWall.add(leftEdge);
-            
-            // Pravá stěna
             const rightWall = new THREE.Mesh(
                 new THREE.PlaneGeometry(width, height),
                 wallMaterial
             );
             rightWall.position.set(length/2, height/2, 0);
             rightWall.rotation.y = -Math.PI / 2;
-            rightWall.userData.isWall = true;
             room.add(rightWall);
-            
-            const rightEdge = new THREE.LineSegments(
-                new THREE.EdgesGeometry(rightWall.geometry),
-                edgeMaterial
-            );
-            rightWall.add(rightEdge);
             
             scene.add(room);
         }
         
-        function createFurnitureObject(type, w, h, d, color) {
+        function createFurnitureObject(type, w, h, d) {
             const furniture = new THREE.Group();
             furniture.userData.type = type;
             furniture.userData.width = w;
             furniture.userData.height = h;
             furniture.userData.depth = d;
-            furniture.userData.color = color;
             furniture.userData.isFurniture = true;
             furniture.userData.heightOffset = 0;
             
             const material = new THREE.MeshStandardMaterial({ 
-                color: color,
-                roughness: 0.7,
-                metalness: 0.1
+                color: 0x8B4513,
+                roughness: 0.7
             });
-            
-            const edgeMaterial = new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 2 });
             
             if (type === 'cabinet') {
                 const body = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), material);
                 body.position.y = h/2;
                 body.castShadow = true;
-                body.receiveShadow = true;
                 body.userData.pickable = true;
                 furniture.add(body);
                 
-                const edges = new THREE.LineSegments(new THREE.EdgesGeometry(body.geometry), edgeMaterial);
-                body.add(edges);
-                
-                const doorMaterial = new THREE.MeshStandardMaterial({ color: color, roughness: 0.6, metalness: 0.2 });
+                const doorMaterial = new THREE.MeshStandardMaterial({ color: 0x8B4513, roughness: 0.6 });
                 const doorWidth = w/2 - 2;
                 const doorHeight = h - 4;
                 
@@ -688,43 +499,20 @@
                 leftDoor.userData.pickable = true;
                 furniture.add(leftDoor);
                 
-                const leftDoorEdges = new THREE.LineSegments(new THREE.EdgesGeometry(leftDoor.geometry), edgeMaterial);
-                leftDoor.add(leftDoorEdges);
-                
                 const rightDoor = new THREE.Mesh(new THREE.BoxGeometry(doorWidth, doorHeight, 1), doorMaterial);
                 rightDoor.position.set(w/4, h/2, d/2 + 0.6);
                 rightDoor.castShadow = true;
                 rightDoor.userData.pickable = true;
                 furniture.add(rightDoor);
                 
-                const rightDoorEdges = new THREE.LineSegments(new THREE.EdgesGeometry(rightDoor.geometry), edgeMaterial);
-                rightDoor.add(rightDoorEdges);
-                
-                const handleMaterial = new THREE.MeshStandardMaterial({ color: 0x333333, metalness: 0.9, roughness: 0.2 });
-                const leftHandle = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 15, 16), handleMaterial);
-                leftHandle.position.set(doorWidth/3, h/2, d/2 + 1.5);
-                leftHandle.rotation.x = Math.PI/2;
-                leftHandle.castShadow = true;
-                leftHandle.userData.pickable = true;
-                furniture.add(leftHandle);
-                
-                const rightHandle = leftHandle.clone();
-                rightHandle.position.set(-doorWidth/3 + w/2, h/2, d/2 + 1.5);
-                rightHandle.userData.pickable = true;
-                furniture.add(rightHandle);
-                
             } else if (type === 'table') {
                 const top = new THREE.Mesh(new THREE.BoxGeometry(w, 3, d), material);
                 top.position.y = h;
                 top.castShadow = true;
-                top.receiveShadow = true;
                 top.userData.pickable = true;
                 furniture.add(top);
                 
-                const topEdges = new THREE.LineSegments(new THREE.EdgesGeometry(top.geometry), edgeMaterial);
-                top.add(topEdges);
-                
-                const legThickness = Math.min(w, d) * 0.05;
+                const legThickness = 5;
                 const legHeight = h - 1.5;
                 const legPositions = [
                     [-w/2 + legThickness, legHeight/2, -d/2 + legThickness],
@@ -739,9 +527,6 @@
                     leg.castShadow = true;
                     leg.userData.pickable = true;
                     furniture.add(leg);
-                    
-                    const legEdges = new THREE.LineSegments(new THREE.EdgesGeometry(leg.geometry), edgeMaterial);
-                    leg.add(legEdges);
                 });
                 
             } else if (type === 'shelf') {
@@ -751,9 +536,6 @@
                 leftSide.castShadow = true;
                 leftSide.userData.pickable = true;
                 furniture.add(leftSide);
-                
-                const leftEdges = new THREE.LineSegments(new THREE.EdgesGeometry(leftSide.geometry), edgeMaterial);
-                leftSide.add(leftEdges);
                 
                 const rightSide = leftSide.clone();
                 rightSide.position.x = w/2 - sideThickness/2;
@@ -767,95 +549,27 @@
                     const shelf = new THREE.Mesh(new THREE.BoxGeometry(w - sideThickness*2, shelfThickness, d), material);
                     shelf.position.y = (h / shelfCount) * i;
                     shelf.castShadow = true;
-                    shelf.receiveShadow = true;
                     shelf.userData.pickable = true;
                     furniture.add(shelf);
-                    
-                    const shelfEdges = new THREE.LineSegments(new THREE.EdgesGeometry(shelf.geometry), edgeMaterial);
-                    shelf.add(shelfEdges);
                 }
                 
             } else if (type === 'drawer') {
                 const body = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), material);
                 body.position.y = h/2;
                 body.castShadow = true;
-                body.receiveShadow = true;
                 body.userData.pickable = true;
                 furniture.add(body);
                 
-                const bodyEdges = new THREE.LineSegments(new THREE.EdgesGeometry(body.geometry), edgeMaterial);
-                body.add(bodyEdges);
-                
                 const drawerCount = Math.floor(h / 30);
                 const drawerHeight = (h / drawerCount) - 2;
-                const drawerMaterial = new THREE.MeshStandardMaterial({ color: color, roughness: 0.6, metalness: 0.2 });
-                const handleMaterial = new THREE.MeshStandardMaterial({ color: 0x333333, metalness: 0.9, roughness: 0.2 });
                 
                 for (let i = 0; i < drawerCount; i++) {
-                    const drawer = new THREE.Mesh(new THREE.BoxGeometry(w - 4, drawerHeight, 1), drawerMaterial);
+                    const drawer = new THREE.Mesh(new THREE.BoxGeometry(w - 4, drawerHeight, 1), material);
                     drawer.position.set(0, (h/drawerCount) * i + drawerHeight/2 + 1, d/2 + 0.6);
                     drawer.castShadow = true;
                     drawer.userData.pickable = true;
                     furniture.add(drawer);
-                    
-                    const drawerEdges = new THREE.LineSegments(new THREE.EdgesGeometry(drawer.geometry), edgeMaterial);
-                    drawer.add(drawerEdges);
-                    
-                    const handle = new THREE.Mesh(new THREE.BoxGeometry(w * 0.3, 2, 2), handleMaterial);
-                    handle.position.set(0, (h/drawerCount) * i + drawerHeight/2 + 1, d/2 + 1.7);
-                    handle.castShadow = true;
-                    handle.userData.pickable = true;
-                    furniture.add(handle);
                 }
-                
-            } else if (type === 'bed') {
-                const mattress = new THREE.Mesh(new THREE.BoxGeometry(w, 20, d), material);
-                mattress.position.y = h;
-                mattress.castShadow = true;
-                mattress.receiveShadow = true;
-                mattress.userData.pickable = true;
-                furniture.add(mattress);
-                
-                const mattressEdges = new THREE.LineSegments(new THREE.EdgesGeometry(mattress.geometry), edgeMaterial);
-                mattress.add(mattressEdges);
-                
-                const frameHeight = h - 10;
-                const frame = new THREE.Mesh(new THREE.BoxGeometry(w, frameHeight, d), material);
-                frame.position.y = frameHeight/2;
-                frame.castShadow = true;
-                frame.userData.pickable = true;
-                furniture.add(frame);
-                
-                const headboard = new THREE.Mesh(new THREE.BoxGeometry(w, 60, 5), material);
-                headboard.position.set(0, h + 30, -d/2 - 2.5);
-                headboard.castShadow = true;
-                headboard.userData.pickable = true;
-                furniture.add(headboard);
-                
-                const headboardEdges = new THREE.LineSegments(new THREE.EdgesGeometry(headboard.geometry), edgeMaterial);
-                headboard.add(headboardEdges);
-                
-            } else if (type === 'counter') {
-                const body = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), material);
-                body.position.y = h/2;
-                body.castShadow = true;
-                body.receiveShadow = true;
-                body.userData.pickable = true;
-                furniture.add(body);
-                
-                const bodyEdges = new THREE.LineSegments(new THREE.EdgesGeometry(body.geometry), edgeMaterial);
-                body.add(bodyEdges);
-                
-                const counterTopMaterial = new THREE.MeshStandardMaterial({ color: 0x696969, roughness: 0.3, metalness: 0.5 });
-                const counterTop = new THREE.Mesh(new THREE.BoxGeometry(w, 3, d + 5), counterTopMaterial);
-                counterTop.position.y = h + 1.5;
-                counterTop.castShadow = true;
-                counterTop.receiveShadow = true;
-                counterTop.userData.pickable = true;
-                furniture.add(counterTop);
-                
-                const counterEdges = new THREE.LineSegments(new THREE.EdgesGeometry(counterTop.geometry), edgeMaterial);
-                counterTop.add(counterEdges);
             }
             
             return furniture;
@@ -867,7 +581,7 @@
             const h = parseFloat(document.getElementById('furnitureHeight').value);
             const d = parseFloat(document.getElementById('furnitureDepth').value);
             
-            const furniture = createFurnitureObject(type, w, h, d, selectedFurnitureColor);
+            const furniture = createFurnitureObject(type, w, h, d);
             furniture.userData.id = furnitureCounter++;
             
             scene.add(furniture);
@@ -880,29 +594,16 @@
             const list = document.getElementById('furnitureList');
             
             if (furnitureItems.length === 0) {
-                list.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Zatím žádný nábytek...<br>Po přidání jej můžete táhnout myší!</p>';
+                list.innerHTML = '<p style="text-align: center; color: #999; padding: 15px; font-size: 12px;">Zatím žádný nábytek</p>';
                 return;
             }
             
             list.innerHTML = furnitureItems.map((item, index) => `
-                <div class="furniture-item ${selectedFurniture === item ? 'selected' : ''}" data-index="${index}">
-                    <div class="furniture-item-header">
-                        <span class="furniture-item-title">${typeNames[item.userData.type]} #${item.userData.id + 1}</span>
-                        <button class="furniture-item-delete" onclick="deleteFurnitureByIndex(${index}); event.stopPropagation();">🗑️</button>
-                    </div>
-                    <div class="furniture-item-info">
-                        ${item.userData.width}×${item.userData.height}×${item.userData.depth} cm
-                    </div>
+                <div class="furniture-item ${selectedFurniture === item ? 'selected' : ''}" onclick="selectFurnitureByIndex(${index})">
+                    <div class="furniture-item-title">${typeNames[item.userData.type]} #${item.userData.id + 1}</div>
+                    <div class="furniture-item-info">${item.userData.width}×${item.userData.height}×${item.userData.depth} cm</div>
                 </div>
             `).join('');
-            
-            document.querySelectorAll('.furniture-item').forEach((el, index) => {
-                el.addEventListener('click', (e) => {
-                    if (!e.target.classList.contains('furniture-item-delete')) {
-                        selectFurnitureByIndex(index);
-                    }
-                });
-            });
         }
         
         function selectFurnitureByIndex(index) {
@@ -927,7 +628,11 @@
                 }
             });
             
-            showControlsWidget();
+            document.getElementById('controlsWidget').classList.add('active');
+            const heightSlider = document.getElementById('heightSlider');
+            heightSlider.value = selectedFurniture.userData.heightOffset || 0;
+            document.getElementById('heightValue').textContent = heightSlider.value;
+            
             updateFurnitureList();
         }
         
@@ -940,33 +645,20 @@
                 });
                 selectedFurniture = null;
             }
-            hideControlsWidget();
-            updateFurnitureList();
-        }
-        
-        function showControlsWidget() {
-            const widget = document.getElementById('controlsWidget');
-            widget.classList.add('active');
-            widget.style.top = '120px';
-            widget.style.left = '20px';
-            
-            const heightSlider = document.getElementById('heightSlider');
-            const heightValue = document.getElementById('heightValue');
-            heightSlider.value = selectedFurniture.userData.heightOffset || 0;
-            heightValue.textContent = heightSlider.value;
-        }
-        
-        function hideControlsWidget() {
             document.getElementById('controlsWidget').classList.remove('active');
+            updateFurnitureList();
         }
         
-        function deleteFurnitureByIndex(index) {
-            scene.remove(furnitureItems[index]);
-            if (selectedFurniture === furnitureItems[index]) {
+        function deleteFurniture() {
+            if (!selectedFurniture) return;
+            
+            const index = furnitureItems.indexOf(selectedFurniture);
+            if (index > -1) {
+                scene.remove(furnitureItems[index]);
+                furnitureItems.splice(index, 1);
                 deselectFurniture();
+                updateFurnitureList();
             }
-            furnitureItems.splice(index, 1);
-            updateFurnitureList();
         }
         
         function setupEventListeners() {
@@ -980,7 +672,6 @@
                 
                 raycaster.setFromCamera(mouse, camera);
                 
-                // Zkontroluj nábytek
                 const furnitureObjects = [];
                 furnitureItems.forEach(item => {
                     item.traverse(child => {
@@ -993,7 +684,6 @@
                 const intersects = raycaster.intersectObjects(furnitureObjects);
                 
                 if (intersects.length > 0 && e.button === 0) {
-                    // Najdi rodičovský nábytek
                     let furniture = intersects[0].object;
                     while (furniture.parent && !furniture.userData.isFurniture) {
                         furniture = furniture.parent;
@@ -1002,19 +692,14 @@
                     if (furniture.userData.isFurniture) {
                         selectFurniture(furniture);
                         isDraggingFurniture = true;
-                        canvas.classList.add('moving-furniture');
-                        e.preventDefault();
                         return;
                     }
                 }
                 
-                // Jinak pohyb kamerou
                 isDraggingCamera = true;
                 isRightClick = e.button === 2;
                 previousMousePosition = { x: e.clientX, y: e.clientY };
-                canvas.classList.add('dragging');
                 
-                // Klik mimo nábytek = deselect
                 if (e.button === 0 && intersects.length === 0) {
                     deselectFurniture();
                 }
@@ -1028,7 +713,6 @@
                     
                     raycaster.setFromCamera(mouse, camera);
                     
-                    // Najdi průsečík s podlahou
                     const floorObjects = [];
                     room.traverse(child => {
                         if (child.userData.isFloor) {
@@ -1069,8 +753,6 @@
             canvas.addEventListener('mouseup', () => {
                 isDraggingFurniture = false;
                 isDraggingCamera = false;
-                canvas.classList.remove('dragging');
-                canvas.classList.remove('moving-furniture');
             });
             
             canvas.addEventListener('wheel', (e) => {
@@ -1083,7 +765,6 @@
             
             canvas.addEventListener('contextmenu', (e) => e.preventDefault());
             
-            // Tlačítka
             document.getElementById('updateRoomBtn').addEventListener('click', createRoom);
             document.getElementById('addFurnitureBtn').addEventListener('click', addFurniture);
             
@@ -1097,17 +778,11 @@
                 camera.lookAt(0, 0, 0);
             });
             
-            document.getElementById('viewFrontBtn').addEventListener('click', () => {
-                camera.position.set(0, 150, 500);
-                camera.lookAt(0, 100, 0);
-            });
-            
             document.getElementById('resetViewBtn').addEventListener('click', () => {
                 camera.position.set(400, 400, 400);
                 camera.lookAt(0, 0, 0);
             });
             
-            // Ovládání nábytku
             document.getElementById('moveUpBtn').addEventListener('click', () => {
                 if (selectedFurniture) {
                     selectedFurniture.userData.heightOffset = (selectedFurniture.userData.heightOffset || 0) + 10;
@@ -1140,35 +815,7 @@
                 }
             });
             
-            document.getElementById('deleteBtn').addEventListener('click', () => {
-                if (selectedFurniture) {
-                    const index = furnitureItems.indexOf(selectedFurniture);
-                    if (index > -1) {
-                        deleteFurnitureByIndex(index);
-                    }
-                }
-            });
-            
-            // Barvy
-            document.querySelectorAll('.color-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const type = this.dataset.type;
-                    const color = this.dataset.color;
-                    
-                    this.parentElement.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    if (type === 'wall') {
-                        wallColor = parseInt(color.replace('#', '0x'));
-                        createRoom();
-                    } else if (type === 'floor') {
-                        floorColor = parseInt(color.replace('#', '0x'));
-                        createRoom();
-                    } else if (type === 'furniture') {
-                        selectedFurnitureColor = parseInt(color.replace('#', '0x'));
-                    }
-                });
-            });
+            document.getElementById('deleteBtn').addEventListener('click', deleteFurniture);
         }
         
         function onWindowResize() {
@@ -1183,8 +830,7 @@
             renderer.render(scene, camera);
         }
         
-        // Globální funkce pro mazání (volána z HTML)
-        window.deleteFurnitureByIndex = deleteFurnitureByIndex;
+        window.selectFurnitureByIndex = selectFurnitureByIndex;
         
         init();
     </script>
