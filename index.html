@@ -234,6 +234,15 @@
             width: 100%;
             height: 100%;
             display: block;
+            cursor: grab;
+        }
+        
+        #canvas.dragging {
+            cursor: grabbing;
+        }
+        
+        #canvas.moving-furniture {
+            cursor: move;
         }
         
         .toolbar {
@@ -246,6 +255,8 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             display: flex;
             gap: 8px;
+            flex-wrap: wrap;
+            max-width: 400px;
         }
         
         .toolbar button {
@@ -263,7 +274,7 @@
             padding: 12px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            max-width: 250px;
+            max-width: 280px;
             font-size: 12px;
         }
         
@@ -271,11 +282,61 @@
             margin-bottom: 8px;
             color: #333;
             font-size: 13px;
+            font-weight: 600;
         }
         
         .info-panel p {
             margin: 4px 0;
             color: #666;
+        }
+        
+        .controls-widget {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 100;
+        }
+        
+        .controls-widget.active {
+            display: block;
+        }
+        
+        .controls-widget h4 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .control-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .control-buttons button {
+            padding: 8px;
+            font-size: 16px;
+            margin: 0;
+        }
+        
+        .slider-group {
+            margin-top: 10px;
+        }
+        
+        .slider-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .slider-group input[type="range"] {
+            width: 100%;
         }
         
         @media (max-width: 1200px) {
@@ -297,7 +358,7 @@
 <body>
     <div class="header">
         <h1>🏠 3D Plánovač Interiéru</h1>
-        <p>Navrhněte celou místnost s nábytkem - kuchyně, ložnice, obývák...</p>
+        <p>Navrhněte celou místnost - táhněte nábytek myší kam chcete!</p>
     </div>
     
     <div class="container">
@@ -393,27 +454,7 @@
             
             <h2>📋 Nábytek v místnosti</h2>
             <div class="furniture-list" id="furnitureList">
-                <p style="text-align: center; color: #999; padding: 20px;">Zatím žádný nábytek...</p>
-            </div>
-            
-            <div id="editSection" style="display: none;">
-                <h2>✏️ Upravit vybraný nábytek</h2>
-                <div class="section">
-                    <div class="input-group">
-                        <label>Pozice X (cm):</label>
-                        <input type="number" id="editX" step="10">
-                    </div>
-                    <div class="input-group">
-                        <label>Pozice Z (cm):</label>
-                        <input type="number" id="editZ" step="10">
-                    </div>
-                    <div class="input-group">
-                        <label>Rotace (°):</label>
-                        <input type="number" id="editRotation" min="0" max="360" step="45">
-                    </div>
-                    <button id="applyEditBtn">✅ Použít změny</button>
-                    <button id="deleteSelectedBtn" class="danger">🗑️ Smazat</button>
-                </div>
+                <p style="text-align: center; color: #999; padding: 20px;">Zatím žádný nábytek...<br>Po přidání jej můžete táhnout myší!</p>
             </div>
         </div>
         
@@ -423,29 +464,59 @@
             <div class="toolbar">
                 <button id="viewTopBtn">📐 Pohled shora</button>
                 <button id="view3DBtn">🔄 3D pohled</button>
+                <button id="viewFrontBtn">👁️ Pohled zepředu</button>
                 <button id="resetViewBtn">↺ Reset</button>
+            </div>
+            
+            <div class="controls-widget" id="controlsWidget">
+                <h4>Ovládání nábytku</h4>
+                <div class="control-buttons">
+                    <button id="moveUpBtn" title="Posunout nahoru">⬆️</button>
+                    <button id="rotateBtn" title="Otočit o 90°">🔄</button>
+                    <button id="moveDownBtn" title="Posunout dolů">⬇️</button>
+                </div>
+                <div class="slider-group">
+                    <label>Výška nad podlahou: <span id="heightValue">0</span> cm</label>
+                    <input type="range" id="heightSlider" min="0" max="250" value="0" step="5">
+                </div>
+                <button id="deleteBtn" class="danger" style="margin-top: 10px;">🗑️ Smazat nábytek</button>
             </div>
             
             <div class="info-panel">
                 <h4>💡 Ovládání:</h4>
-                <p>• Levé tlačítko: Otáčení</p>
-                <p>• Pravé tlačítko: Posun</p>
-                <p>• Kolečko: Zoom</p>
-                <p>• Klikněte na nábytek pro úpravy</p>
+                <p><strong>Kamera:</strong></p>
+                <p>• Levé tlačítko: Otáčení pohledu</p>
+                <p>• Pravé tlačítko: Posun kamery</p>
+                <p>• Kolečko: Přiblížení/Oddálení</p>
+                <p style="margin-top: 8px;"><strong>Nábytek:</strong></p>
+                <p>• Klikněte na nábytek a táhněte</p>
+                <p>• Ovládací panel pro výšku a rotaci</p>
             </div>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        let scene, camera, renderer, room;
+        let scene, camera, renderer, room, raycaster, mouse;
         let furnitureItems = [];
         let selectedFurniture = null;
         let furnitureCounter = 0;
+        let isDraggingFurniture = false;
+        let isDraggingCamera = false;
+        let isRightClick = false;
         
         let wallColor = 0xf5f5f5;
         let floorColor = 0xD2B48C;
         let selectedFurnitureColor = 0x8B4513;
+        
+        const typeNames = {
+            'cabinet': 'Skříň',
+            'table': 'Stůl',
+            'shelf': 'Police',
+            'drawer': 'Komoda',
+            'bed': 'Postel',
+            'counter': 'Kuchyňská linka'
+        };
         
         function init() {
             scene = new THREE.Scene();
@@ -460,6 +531,9 @@
             renderer.setSize(canvas.clientWidth, canvas.clientHeight);
             renderer.shadowMap.enabled = true;
             renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
             
             // Světla
             const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
@@ -481,7 +555,6 @@
             scene.add(pointLight);
             
             createRoom();
-            setupControls();
             setupEventListeners();
             
             window.addEventListener('resize', onWindowResize);
@@ -497,6 +570,7 @@
             const height = parseFloat(document.getElementById('roomHeight').value);
             
             room = new THREE.Group();
+            room.userData.isRoom = true;
             
             // Podlaha
             const floorGeometry = new THREE.PlaneGeometry(length, width);
@@ -508,6 +582,7 @@
             const floor = new THREE.Mesh(floorGeometry, floorMaterial);
             floor.rotation.x = -Math.PI / 2;
             floor.receiveShadow = true;
+            floor.userData.isFloor = true;
             room.add(floor);
             
             // Mřížka
@@ -530,6 +605,7 @@
                 wallMaterial
             );
             backWall.position.set(0, height/2, -width/2);
+            backWall.userData.isWall = true;
             room.add(backWall);
             
             const backEdge = new THREE.LineSegments(
@@ -545,6 +621,7 @@
             );
             leftWall.position.set(-length/2, height/2, 0);
             leftWall.rotation.y = Math.PI / 2;
+            leftWall.userData.isWall = true;
             room.add(leftWall);
             
             const leftEdge = new THREE.LineSegments(
@@ -560,6 +637,7 @@
             );
             rightWall.position.set(length/2, height/2, 0);
             rightWall.rotation.y = -Math.PI / 2;
+            rightWall.userData.isWall = true;
             room.add(rightWall);
             
             const rightEdge = new THREE.LineSegments(
@@ -578,6 +656,8 @@
             furniture.userData.height = h;
             furniture.userData.depth = d;
             furniture.userData.color = color;
+            furniture.userData.isFurniture = true;
+            furniture.userData.heightOffset = 0;
             
             const material = new THREE.MeshStandardMaterial({ 
                 color: color,
@@ -592,6 +672,7 @@
                 body.position.y = h/2;
                 body.castShadow = true;
                 body.receiveShadow = true;
+                body.userData.pickable = true;
                 furniture.add(body);
                 
                 const edges = new THREE.LineSegments(new THREE.EdgesGeometry(body.geometry), edgeMaterial);
@@ -604,23 +685,32 @@
                 const leftDoor = new THREE.Mesh(new THREE.BoxGeometry(doorWidth, doorHeight, 1), doorMaterial);
                 leftDoor.position.set(-w/4, h/2, d/2 + 0.6);
                 leftDoor.castShadow = true;
+                leftDoor.userData.pickable = true;
                 furniture.add(leftDoor);
-                furniture.add(new THREE.LineSegments(new THREE.EdgesGeometry(leftDoor.geometry), edgeMaterial));
+                
+                const leftDoorEdges = new THREE.LineSegments(new THREE.EdgesGeometry(leftDoor.geometry), edgeMaterial);
+                leftDoor.add(leftDoorEdges);
                 
                 const rightDoor = new THREE.Mesh(new THREE.BoxGeometry(doorWidth, doorHeight, 1), doorMaterial);
                 rightDoor.position.set(w/4, h/2, d/2 + 0.6);
                 rightDoor.castShadow = true;
+                rightDoor.userData.pickable = true;
                 furniture.add(rightDoor);
+                
+                const rightDoorEdges = new THREE.LineSegments(new THREE.EdgesGeometry(rightDoor.geometry), edgeMaterial);
+                rightDoor.add(rightDoorEdges);
                 
                 const handleMaterial = new THREE.MeshStandardMaterial({ color: 0x333333, metalness: 0.9, roughness: 0.2 });
                 const leftHandle = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 15, 16), handleMaterial);
                 leftHandle.position.set(doorWidth/3, h/2, d/2 + 1.5);
                 leftHandle.rotation.x = Math.PI/2;
                 leftHandle.castShadow = true;
+                leftHandle.userData.pickable = true;
                 furniture.add(leftHandle);
                 
                 const rightHandle = leftHandle.clone();
                 rightHandle.position.set(-doorWidth/3 + w/2, h/2, d/2 + 1.5);
+                rightHandle.userData.pickable = true;
                 furniture.add(rightHandle);
                 
             } else if (type === 'table') {
@@ -628,8 +718,11 @@
                 top.position.y = h;
                 top.castShadow = true;
                 top.receiveShadow = true;
+                top.userData.pickable = true;
                 furniture.add(top);
-                furniture.add(new THREE.LineSegments(new THREE.EdgesGeometry(top.geometry), edgeMaterial));
+                
+                const topEdges = new THREE.LineSegments(new THREE.EdgesGeometry(top.geometry), edgeMaterial);
+                top.add(topEdges);
                 
                 const legThickness = Math.min(w, d) * 0.05;
                 const legHeight = h - 1.5;
@@ -644,326 +737,14 @@
                     const leg = new THREE.Mesh(new THREE.BoxGeometry(legThickness, legHeight, legThickness), material);
                     leg.position.set(...pos);
                     leg.castShadow = true;
+                    leg.userData.pickable = true;
                     furniture.add(leg);
+                    
+                    const legEdges = new THREE.LineSegments(new THREE.EdgesGeometry(leg.geometry), edgeMaterial);
+                    leg.add(legEdges);
                 });
                 
             } else if (type === 'shelf') {
                 const sideThickness = 2;
                 const leftSide = new THREE.Mesh(new THREE.BoxGeometry(sideThickness, h, d), material);
-                leftSide.position.set(-w/2 + sideThickness/2, h/2, 0);
-                leftSide.castShadow = true;
-                furniture.add(leftSide);
-                furniture.add(new THREE.LineSegments(new THREE.EdgesGeometry(leftSide.geometry), edgeMaterial));
-                
-                const rightSide = leftSide.clone();
-                rightSide.position.x = w/2 - sideThickness/2;
-                furniture.add(rightSide);
-                
-                const shelfCount = Math.floor(h / 40);
-                const shelfThickness = 2;
-                
-                for (let i = 0; i <= shelfCount; i++) {
-                    const shelf = new THREE.Mesh(new THREE.BoxGeometry(w - sideThickness*2, shelfThickness, d), material);
-                    shelf.position.y = (h / shelfCount) * i;
-                    shelf.castShadow = true;
-                    shelf.receiveShadow = true;
-                    furniture.add(shelf);
-                }
-                
-            } else if (type === 'drawer') {
-                const body = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), material);
-                body.position.y = h/2;
-                body.castShadow = true;
-                body.receiveShadow = true;
-                furniture.add(body);
-                furniture.add(new THREE.LineSegments(new THREE.EdgesGeometry(body.geometry), edgeMaterial));
-                
-                const drawerCount = Math.floor(h / 30);
-                const drawerHeight = (h / drawerCount) - 2;
-                const drawerMaterial = new THREE.MeshStandardMaterial({ color: color, roughness: 0.6, metalness: 0.2 });
-                const handleMaterial = new THREE.MeshStandardMaterial({ color: 0x333333, metalness: 0.9, roughness: 0.2 });
-                
-                for (let i = 0; i < drawerCount; i++) {
-                    const drawer = new THREE.Mesh(new THREE.BoxGeometry(w - 4, drawerHeight, 1), drawerMaterial);
-                    drawer.position.set(0, (h/drawerCount) * i + drawerHeight/2 + 1, d/2 + 0.6);
-                    drawer.castShadow = true;
-                    furniture.add(drawer);
-                    furniture.add(new THREE.LineSegments(new THREE.EdgesGeometry(drawer.geometry), edgeMaterial));
-                    
-                    const handle = new THREE.Mesh(new THREE.BoxGeometry(w * 0.3, 2, 2), handleMaterial);
-                    handle.position.set(0, (h/drawerCount) * i + drawerHeight/2 + 1, d/2 + 1.7);
-                    handle.castShadow = true;
-                    furniture.add(handle);
-                }
-                
-            } else if (type === 'bed') {
-                const mattress = new THREE.Mesh(new THREE.BoxGeometry(w, 20, d), material);
-                mattress.position.y = h;
-                mattress.castShadow = true;
-                mattress.receiveShadow = true;
-                furniture.add(mattress);
-                furniture.add(new THREE.LineSegments(new THREE.EdgesGeometry(mattress.geometry), edgeMaterial));
-                
-                const frameHeight = h - 10;
-                const frame = new THREE.Mesh(new THREE.BoxGeometry(w, frameHeight, d), material);
-                frame.position.y = frameHeight/2;
-                frame.castShadow = true;
-                furniture.add(frame);
-                
-                const headboard = new THREE.Mesh(new THREE.BoxGeometry(w, 60, 5), material);
-                headboard.position.set(0, h + 30, -d/2 - 2.5);
-                headboard.castShadow = true;
-                furniture.add(headboard);
-                furniture.add(new THREE.LineSegments(new THREE.EdgesGeometry(headboard.geometry), edgeMaterial));
-                
-            } else if (type === 'counter') {
-                const body = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), material);
-                body.position.y = h/2;
-                body.castShadow = true;
-                body.receiveShadow = true;
-                furniture.add(body);
-                furniture.add(new THREE.LineSegments(new THREE.EdgesGeometry(body.geometry), edgeMaterial));
-                
-                const counterTopMaterial = new THREE.MeshStandardMaterial({ color: 0x696969, roughness: 0.3, metalness: 0.5 });
-                const counterTop = new THREE.Mesh(new THREE.BoxGeometry(w, 3, d + 5), counterTopMaterial);
-                counterTop.position.y = h + 1.5;
-                counterTop.castShadow = true;
-                counterTop.receiveShadow = true;
-                furniture.add(counterTop);
-                furniture.add(new THREE.LineSegments(new THREE.EdgesGeometry(counterTop.geometry), edgeMaterial));
-            }
-            
-            return furniture;
-        }
-        
-        function addFurniture() {
-            const type = document.getElementById('furnitureType').value;
-            const w = parseFloat(document.getElementById('furnitureWidth').value);
-            const h = parseFloat(document.getElementById('furnitureHeight').value);
-            const d = parseFloat(document.getElementById('furnitureDepth').value);
-            
-            const furniture = createFurnitureObject(type, w, h, d, selectedFurnitureColor);
-            furniture.userData.id = furnitureCounter++;
-            furniture.userData.posX = 0;
-            furniture.userData.posZ = 0;
-            furniture.userData.rotation = 0;
-            
-            scene.add(furniture);
-            furnitureItems.push(furniture);
-            
-            updateFurnitureList();
-        }
-        
-        function updateFurnitureList() {
-            const list = document.getElementById('furnitureList');
-            
-            if (furnitureItems.length === 0) {
-                list.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Zatím žádný nábytek...</p>';
-                return;
-            }
-            
-            const typeNames = {
-                'cabinet': 'Skříň',
-                'table': 'Stůl',
-                'shelf': 'Police',
-                'drawer': 'Komoda',
-                'bed': 'Postel',
-                'counter': 'Kuchyňská linka'
-            };
-            
-            list.innerHTML = furnitureItems.map((item, index) => `
-                <div class="furniture-item ${selectedFurniture === item ? 'selected' : ''}" data-index="${index}">
-                    <div class="furniture-item-header">
-                        <span class="furniture-item-title">${typeNames[item.userData.type]} #${item.userData.id + 1}</span>
-                        <button class="furniture-item-delete" onclick="deleteFurniture(${index})">🗑️</button>
-                    </div>
-                    <div class="furniture-item-info">
-                        ${item.userData.width}×${item.userData.height}×${item.userData.depth} cm
-                    </div>
-                </div>
-            `).join('');
-            
-            document.querySelectorAll('.furniture-item').forEach((el, index) => {
-                el.addEventListener('click', (e) => {
-                    if (!e.target.classList.contains('furniture-item-delete')) {
-                        selectFurniture(index);
-                    }
-                });
-            });
-        }
-        
-        function selectFurniture(index) {
-            selectedFurniture = furnitureItems[index];
-            
-            furnitureItems.forEach(item => {
-                item.traverse(child => {
-                    if (child.isMesh && child.material) {
-                        child.material.emissive = new THREE.Color(0x000000);
-                    }
-                });
-            });
-            
-            selectedFurniture.traverse(child => {
-                if (child.isMesh && child.material) {
-                    child.material.emissive = new THREE.Color(0x4444ff);
-                    child.material.emissiveIntensity = 0.2;
-                }
-            });
-            
-            document.getElementById('editSection').style.display = 'block';
-            document.getElementById('editX').value = selectedFurniture.userData.posX;
-            document.getElementById('editZ').value = selectedFurniture.userData.posZ;
-            document.getElementById('editRotation').value = selectedFurniture.userData.rotation;
-            
-            updateFurnitureList();
-        }
-        
-        function applyEdit() {
-            if (!selectedFurniture) return;
-            
-            const x = parseFloat(document.getElementById('editX').value);
-            const z = parseFloat(document.getElementById('editZ').value);
-            const rotation = parseFloat(document.getElementById('editRotation').value);
-            
-            selectedFurniture.position.set(x, 0, z);
-            selectedFurniture.rotation.y = (rotation * Math.PI) / 180;
-            
-            selectedFurniture.userData.posX = x;
-            selectedFurniture.userData.posZ = z;
-            selectedFurniture.userData.rotation = rotation;
-        }
-        
-        function deleteFurniture(index) {
-            scene.remove(furnitureItems[index]);
-            furnitureItems.splice(index, 1);
-            
-            if (selectedFurniture === furnitureItems[index]) {
-                selectedFurniture = null;
-                document.getElementById('editSection').style.display = 'none';
-            }
-            
-            updateFurnitureList();
-        }
-        
-        function deleteSelected() {
-            if (!selectedFurniture) return;
-            
-            const index = furnitureItems.indexOf(selectedFurniture);
-            if (index > -1) {
-                deleteFurniture(index);
-            }
-        }
-        
-        function setupControls() {
-            let isDragging = false;
-            let previousMousePosition = { x: 0, y: 0 };
-            let isRightClick = false;
-            
-            const canvas = renderer.domElement;
-            
-            canvas.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                isRightClick = e.button === 2;
-                previousMousePosition = { x: e.clientX, y: e.clientY };
-            });
-            
-            canvas.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                
-                const deltaX = e.clientX - previousMousePosition.x;
-                const deltaY = e.clientY - previousMousePosition.y;
-                
-                if (isRightClick) {
-                    camera.position.x -= deltaX * 0.5;
-                    camera.position.y += deltaY * 0.5;
-                } else {
-                    const radius = Math.sqrt(camera.position.x ** 2 + camera.position.z ** 2);
-                    const angle = Math.atan2(camera.position.z, camera.position.x);
-                    const newAngle = angle - deltaX * 0.01;
-                    
-                    camera.position.x = radius * Math.cos(newAngle);
-                    camera.position.z = radius * Math.sin(newAngle);
-                    camera.position.y += deltaY * 0.5;
-                    
-                    camera.lookAt(0, 100, 0);
-                }
-                
-                previousMousePosition = { x: e.clientX, y: e.clientY };
-            });
-            
-            canvas.addEventListener('mouseup', () => {
-                isDragging = false;
-            });
-            
-            canvas.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                const zoomSpeed = 10;
-                const direction = new THREE.Vector3();
-                camera.getWorldDirection(direction);
-                camera.position.addScaledVector(direction, e.deltaY > 0 ? -zoomSpeed : zoomSpeed);
-            });
-            
-            canvas.addEventListener('contextmenu', (e) => e.preventDefault());
-        }
-        
-        function setupEventListeners() {
-            document.getElementById('updateRoomBtn').addEventListener('click', createRoom);
-            
-            document.getElementById('addFurnitureBtn').addEventListener('click', addFurniture);
-            
-            document.getElementById('applyEditBtn').addEventListener('click', applyEdit);
-            
-            document.getElementById('deleteSelectedBtn').addEventListener('click', deleteSelected);
-            
-            document.querySelectorAll('.color-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const type = this.dataset.type;
-                    const color = this.dataset.color;
-                    
-                    this.parentElement.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    if (type === 'wall') {
-                        wallColor = parseInt(color.replace('#', '0x'));
-                        createRoom();
-                    } else if (type === 'floor') {
-                        floorColor = parseInt(color.replace('#', '0x'));
-                        createRoom();
-                    } else if (type === 'furniture') {
-                        selectedFurnitureColor = parseInt(color.replace('#', '0x'));
-                    }
-                });
-            });
-            
-            document.getElementById('viewTopBtn').addEventListener('click', () => {
-                camera.position.set(0, 600, 0);
-                camera.lookAt(0, 0, 0);
-            });
-            
-            document.getElementById('view3DBtn').addEventListener('click', () => {
-                camera.position.set(400, 400, 400);
-                camera.lookAt(0, 0, 0);
-            });
-            
-            document.getElementById('resetViewBtn').addEventListener('click', () => {
-                camera.position.set(400, 400, 400);
-                camera.lookAt(0, 0, 0);
-            });
-        }
-        
-        function onWindowResize() {
-            const canvas = renderer.domElement;
-            camera.aspect = canvas.clientWidth / canvas.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-        }
-        
-        function animate() {
-            requestAnimationFrame(animate);
-            renderer.render(scene, camera);
-        }
-        
-        init();
-    </script>
-</body>
-</html>
+                leftSide.position.
